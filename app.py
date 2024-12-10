@@ -50,18 +50,21 @@ def detect_hands(image_data):
 
 @socketio.on("send_frame")
 def handle_frame(frame_data):
-    try:
-        # Decode the base64 image data
-        img_data = base64.b64decode(frame_data.split(",")[1])
+    def process_frame():
+        try:
+            # Decode the base64 image data
+            img_data = base64.b64decode(frame_data.split(",")[1])
 
-        # Detect hands from the image
-        keypoints = detect_hands(img_data)
+            # Detect hands from the image
+            keypoints = detect_hands(img_data)
 
-        # Emit the detected keypoints to the frontend
-        emit("hand_keypoints", {"keypoints": keypoints})
+            # Emit the detected keypoints to the frontend
+            emit("hand_keypoints", {"keypoints": keypoints})
 
-    except Exception as e:
-        emit("error", {"error": str(e)})
+        except Exception as e:
+            emit("error", {"error": str(e)})
+
+    eventlet.spawn(process_frame)
 
 @app.route("/")
 def index():
