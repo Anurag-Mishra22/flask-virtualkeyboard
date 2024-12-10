@@ -13,6 +13,9 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 # Initialize HandDetector
 detector = HandDetector(maxHands=1, detectionCon=0.8)
 
+@socketio.on('connect')
+def test_connect():
+    print('Client connected')
 
 def detect_hands(image_data):
     # Convert image data to an OpenCV image
