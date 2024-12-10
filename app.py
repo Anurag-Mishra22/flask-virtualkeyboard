@@ -1,7 +1,7 @@
 import eventlet
 eventlet.monkey_patch()
 
-from flask import Flask
+from flask import Flask, current_app
 from flask_socketio import SocketIO, emit
 import base64
 import numpy as np
@@ -51,18 +51,19 @@ def detect_hands(image_data):
 @socketio.on("send_frame")
 def handle_frame(frame_data):
     def process_frame():
-        try:
-            # Decode the base64 image data
-            img_data = base64.b64decode(frame_data.split(",")[1])
+        with app.app_context():
+            try:
+                # Decode the base64 image data
+                img_data = base64.b64decode(frame_data.split(",")[1])
 
-            # Detect hands from the image
-            keypoints = detect_hands(img_data)
+                # Detect hands from the image
+                keypoints = detect_hands(img_data)
 
-            # Emit the detected keypoints to the frontend
-            emit("hand_keypoints", {"keypoints": keypoints})
+                # Emit the detected keypoints to the frontend
+                emit("hand_keypoints", {"keypoints": keypoints})
 
-        except Exception as e:
-            emit("error", {"error": str(e)})
+            except Exception as e:
+                emit("error", {"error": str(e)})
 
     eventlet.spawn(process_frame)
 
