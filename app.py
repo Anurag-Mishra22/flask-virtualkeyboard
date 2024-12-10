@@ -48,6 +48,7 @@ def detect_hands(image_data):
 
 @socketio.on("send_frame")
 def handle_frame(frame_data):
+    print("hello")
     try:
         # Decode the base64 image data
         img_data = base64.b64decode(frame_data.split(",")[1])
