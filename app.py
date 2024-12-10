@@ -43,13 +43,10 @@ def detect_hands(image_data):
                         "z": lm[2],  # Z-coordinate
                     }
                 )
-    print(keypoints)
     return keypoints
-
 
 @socketio.on("send_frame")
 def handle_frame(frame_data):
-    print("hello")
     try:
         # Decode the base64 image data
         img_data = base64.b64decode(frame_data.split(",")[1])
@@ -63,12 +60,9 @@ def handle_frame(frame_data):
     except Exception as e:
         emit("error", {"error": str(e)})
 
-
 @app.route("/")
 def index():
-    print("hello its working")
     return "Hand Detection WebSocket Server"
-
 
 if __name__ == "__main__":
     socketio.run(app, host="0.0.0.0", port=5000, debug=True)
