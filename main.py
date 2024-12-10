@@ -17,6 +17,10 @@ detector = HandDetector(maxHands=1, detectionCon=0.8)
 def test_connect():
     print('Client connected')
 
+@socketio.on('connect')
+def test_connect():
+    print('Client connected')
+
 def detect_hands(image_data):
     # Convert image data to an OpenCV image
     np_img = np.array(Image.open(BytesIO(image_data)))
