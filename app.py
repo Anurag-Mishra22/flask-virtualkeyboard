@@ -43,6 +43,7 @@ def detect_hands(image_data):
                         "z": lm[2],  # Z-coordinate
                     }
                 )
+    print(keypoints)
     return keypoints
 
 
