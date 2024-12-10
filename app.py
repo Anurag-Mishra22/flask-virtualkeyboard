@@ -6,9 +6,12 @@ from io import BytesIO
 from PIL import Image
 from cvzone.HandTrackingModule import HandDetector
 import cv2  # Import OpenCV
+from flask_cors import CORS
 
 app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*")
+
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Initialize HandDetector
 detector = HandDetector(maxHands=1, detectionCon=0.8)
