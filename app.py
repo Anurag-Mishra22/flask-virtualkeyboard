@@ -66,6 +66,7 @@ def handle_frame(frame_data):
 
 @app.route("/")
 def index():
+    print("hello its working")
     return "Hand Detection WebSocket Server"
 
 
