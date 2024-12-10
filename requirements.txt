@@ -1,5 +1,5 @@
 gunicorn
-﻿absl-py==2.1.0
+absl-py==2.1.0
 attrs==24.2.0
 bidict==0.23.1
 blinker==1.9.0
